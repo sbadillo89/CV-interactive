@@ -118,7 +118,9 @@ const App: React.FC = () => {
           }
         });
       },
-      { rootMargin: '-30% 0px -30% 0px', threshold: 0.2 }
+      // Using a pixel-based rootMargin and a low threshold for more reliable detection.
+      // This ensures sections are detected even if they aren't perfectly centered.
+      { rootMargin: '-200px 0px -200px 0px', threshold: 0.01 }
     );
 
     Object.values(sectionRefs.current).forEach((section) => {
@@ -137,6 +139,7 @@ const App: React.FC = () => {
   }, [language]);
   
   const sections = ['home', 'about', 'experience', 'education', 'skills', 'languages'];
+  const contentSectionIds = ['about', 'experience', 'education', 'skills', 'languages'];
 
   const LanguageSwitcher = () => (
     <div className="flex justify-center space-x-2 mt-8">
@@ -207,49 +210,52 @@ const App: React.FC = () => {
           <LanguageSwitcher />
         </section>
 
-        {['about', 'experience', 'education', 'skills', 'languages'].map(sectionId => {
-           const sectionClassName = `min-h-screen flex justify-center p-4 md:p-8 cv-section ${sectionId === 'experience' ? 'py-24' : 'items-center'}`;
-          return (
-            <section key={sectionId} id={sectionId} ref={el => { sectionRefs.current[sectionId] = el; }} className={sectionClassName}>
-              <div className="w-full max-w-4xl bg-white/50 dark:bg-black/20 backdrop-blur-sm border border-black/10 dark:border-white/10 p-8 md:p-12 rounded-2xl shadow-2xl">
-                {sectionId === 'about' && (
-                  <Section title={profileData.sections.about} className="animatable">
-                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg animatable" style={{ animationDelay: '0.2s' }}>{profileData.about}</p>
-                  </Section>
-                )}
-                {sectionId === 'experience' && (
-                  <Section title={profileData.sections.experience} className="animatable">
-                    <ExperienceTimeline experiences={profileData.experience} />
-                  </Section>
-                )}
-                {sectionId === 'education' && (
-                  <Section title={profileData.sections.education} className="animatable">
-                    {profileData.education.map((edu, index) => <EducationCard key={index} education={edu} className="animatable" style={{ animationDelay: `${0.2 + index * 0.15}s` }} />)}
-                  </Section>
-                )}
-                {sectionId === 'skills' && (
-                  <Section title={profileData.sections.skills} className="animatable">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-                      {profileData.skills.map((skill, index) => <SkillBar key={index} skill={skill} className="animatable" style={{ animationDelay: `${0.2 + index * 0.05}s` }}/>)}
-                    </div>
-                  </Section>
-                )}
-                {sectionId === 'languages' && (
-                  <Section title={profileData.sections.languages} className="animatable">
-                    <div className="space-y-3">
-                      {profileData.languages.map((lang, index) => (
-                        <div key={index} className="flex justify-between items-center text-gray-700 dark:text-gray-300 text-lg animatable" style={{ animationDelay: `${0.2 + index * 0.15}s` }}>
-                          <span>{lang.language}</span>
-                          <span className="font-semibold text-teal-600 dark:text-teal-300">{lang.proficiency}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </Section>
-                )}
-              </div>
-            </section>
-          )
-        })}
+        {contentSectionIds.map(sectionId => {
+            // Standardized class for all content sections for consistency.
+            const sectionClassName = "min-h-screen flex items-center p-4 md:p-8 cv-section";
+
+            return (
+              <section key={sectionId} id={sectionId} ref={el => { sectionRefs.current[sectionId] = el; }} className={sectionClassName}>
+                <div className="w-full max-w-4xl mx-auto bg-white/50 dark:bg-black/20 backdrop-blur-sm border border-black/10 dark:border-white/10 p-8 md:p-12 rounded-2xl shadow-2xl">
+                  {sectionId === 'about' && (
+                    <Section title={profileData.sections.about} className="animatable">
+                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg animatable" style={{ animationDelay: '0.2s' }}>{profileData.about}</p>
+                    </Section>
+                  )}
+                  {sectionId === 'experience' && (
+                    <Section title={profileData.sections.experience} className="animatable">
+                      <ExperienceTimeline experiences={profileData.experience} />
+                    </Section>
+                  )}
+                  {sectionId === 'education' && (
+                    <Section title={profileData.sections.education} className="animatable">
+                      {profileData.education.map((edu, index) => <EducationCard key={index} education={edu} className="animatable" style={{ animationDelay: `${0.2 + index * 0.15}s` }} />)}
+                    </Section>
+                  )}
+                  {sectionId === 'skills' && (
+                    <Section title={profileData.sections.skills} className="animatable">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                        {profileData.skills.map((skill, index) => <SkillBar key={index} skill={skill} className="animatable" style={{ animationDelay: `${0.2 + index * 0.05}s` }}/>)}
+                      </div>
+                    </Section>
+                  )}
+                  {sectionId === 'languages' && (
+                    <Section title={profileData.sections.languages} className="animatable">
+                      <div className="space-y-3">
+                        {profileData.languages.map((lang, index) => (
+                          <div key={index} className="flex justify-between items-center text-gray-700 dark:text-gray-300 text-lg animatable" style={{ animationDelay: `${0.2 + index * 0.15}s` }}>
+                            <span>{lang.language}</span>
+                            <span className="font-semibold text-teal-600 dark:text-teal-300">{lang.proficiency}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </Section>
+                  )}
+                </div>
+              </section>
+            );
+          })
+        }
       </main>
     </div>
   );
