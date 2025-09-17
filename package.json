@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://sbadillo89.github.io/CV-interactive",
+  "homepage": "https://sbadillo89.github.io",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO & Metadata -->
+    <title>Sergio Badillo Bustillo - Senior Full Stack Engineer</title>
+    <meta name="description" content="Interactive professional CV of Sergio Badillo Bustillo, a Senior Full Stack Engineer with expertise in React, Angular, Node.js, and modern web technologies.">
+    <meta name="author" content="Sergio Badillo Bustillo">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sergio-badillo.dev/">
+    <meta property="og:title" content="Sergio Badillo Bustillo - Senior Full Stack Engineer">
+    <meta property="og:description" content="Discover the professional journey and skills of Sergio Badillo Bustillo through this interactive web CV.">
+    <meta property="og:image" content="https://i.imgur.com/your-profile-image-preview.jpg"> <!-- Replace with a link to an image preview -->
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://sergio-badillo.dev/">
+    <meta property="twitter:title" content="Sergio Badillo Bustillo - Senior Full Stack Engineer">
+    <meta property="twitter:description" content="Discover the professional journey and skills of Sergio Badillo Bustillo through this interactive web CV.">
+    <meta property="twitter:image" content="https://i.imgur.com/your-profile-image-preview.jpg"> <!-- Replace with a link to an image preview -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+      }
+    </script>
+    <style>
+      :root {
+        --bg-light: #f3f4f6; /* gray-100 */
+        --text-light: #1f2937; /* gray-800 */
+        --primary-light: #14b8a6; /* teal-500 */
+        --secondary-text-light: #4b5563; /* gray-600 */
+        --card-bg-light: rgba(255, 255, 255, 0.7);
+        --border-light: rgba(0, 0, 0, 0.1);
+
+        --bg-dark: #111827; /* gray-900 */
+        --text-dark: #e5e7eb; /* gray-200 */
+        --primary-dark: #2dd4bf; /* teal-400 */
+        --secondary-text-dark: #9ca3af; /* gray-400 */
+        --card-bg-dark: rgba(23, 37, 51, 0.2);
+        --border-dark: rgba(255, 255, 255, 0.1);
+      }
+
+      @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      body {
+        background-color: var(--bg-light);
+        color: var(--text-light);
+        transition: background-color 0.5s ease, color 0.5s ease;
+      }
+      
+      html.dark body {
+        background: linear-gradient(-45deg, #1a202c, #2d3748, #4a5568, #2c5282);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        color: var(--text-dark);
+        background-attachment: fixed; /* For parallax effect */
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: var(--bg-light); }
+      ::-webkit-scrollbar-thumb { background: #9ca3af; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: #6b7280; }
+      html.dark ::-webkit-scrollbar-track { background: #1a202c; }
+      html.dark ::-webkit-scrollbar-thumb { background: #4a5568; }
+      html.dark ::-webkit-scrollbar-thumb:hover { background: #718096; }
+
+      /* Animation */
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .cv-section { opacity: 0; transition: opacity 0.8s ease-out; }
+      .cv-section.is-visible { opacity: 1; }
+      .animatable { opacity: 0; }
+      .is-visible .animatable { animation: fadeInUp 0.7s ease-out forwards; }
+      
+      /* Custom Cursor */
+      .custom-cursor .cursor-dot {
+        position: fixed;
+        top: 0; left: 0;
+        transform: translate(-50%, -50%);
+        width: 6px; height: 6px;
+        background-color: var(--primary-light);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transition: transform 0.1s ease-out;
+      }
+       html.dark .custom-cursor .cursor-dot {
+        background-color: var(--primary-dark);
+      }
+      .custom-cursor .cursor-outline {
+        position: fixed;
+        top: 0; left: 0;
+        transform: translate(-50%, -50%);
+        width: 30px; height: 30px;
+        background-color: transparent;
+        border: 2px solid var(--primary-light);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transition: transform 0.2s ease-out, width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+      }
+      html.dark .custom-cursor .cursor-outline {
+        border-color: var(--primary-dark);
+      }
+      body {
+        cursor: none;
+      }
+      body a:hover, body button:hover {
+        cursor: none;
+      }
+
+      /* Timeline */
+      .timeline { position: relative; }
+      .timeline::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 100%;
+        background-color: var(--border-light);
+      }
+      html.dark .timeline::before { background-color: var(--border-dark); }
+      .timeline-item { position: relative; width: 50%; padding: 20px 40px; box-sizing: border-box; }
+      .timeline-item:nth-child(odd) { left: 0; }
+      .timeline-item:nth-child(even) { left: 50%; }
+      .timeline-item::after {
+        content: '';
+        position: absolute;
+        top: 30px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: var(--primary-light);
+        border: 2px solid var(--bg-light);
+        z-index: 1;
+      }
+      html.dark .timeline-item::after { 
+        background-color: var(--primary-dark);
+        border-color: var(--bg-dark);
+      }
+      .timeline-item:nth-child(odd)::after { right: -8px; }
+      .timeline-item:nth-child(even)::after { left: -8px; }
+
+      @media (max-width: 768px) {
+        .timeline::before { left: 8px; }
+        .timeline-item { width: 100%; padding-left: 40px; padding-right: 0; }
+        .timeline-item:nth-child(even) { left: 0; }
+        .timeline-item::after { left: 0; }
+        .timeline-item:nth-child(odd)::after, .timeline-item:nth-child(even)::after {
+          left: 0;
+        }
+      }
+
+      /* Print styles */
+      @media print {
+        @page { size: A4; margin: 20mm; }
+        body {
+          background: #fff !important;
+          color: #000 !important;
+          animation: none !important;
+        }
+        nav, .theme-switcher, .download-btn, .custom-cursor {
+          display: none !important;
+        }
+        .cv-section, .animatable {
+          opacity: 1 !important;
+          transform: none !important;
+          animation: none !important;
+        }
+        .min-h-screen { min-height: auto !important; }
+        #home { text-align: left !important; flex-direction: row; align-items: center; }
+        #home img { width: 100px !important; height: 100px !important; margin: 0 20px 0 0;}
+        #home h1 { font-size: 24pt !important; }
+        #home h2 { font-size: 16pt !important; }
+        #home .mt-8 { display: none; }
+        .bg-black\/20, .dark\:bg-black\/20, .dark\:bg-gray-800\/50, .backdrop-blur-sm, .shadow-2xl, .shadow-lg {
+          background: transparent !important;
+          backdrop-filter: none !important;
+          box-shadow: none !important;
+          border: 1px solid #ccc !important;
+        }
+        .text-teal-300, .dark\:text-teal-300, .dark\:text-teal-400 { color: #007d6d !important; }
+        .text-white, .dark\:text-white { color: #000 !important; }
+        .text-gray-300, .dark\:text-gray-300 { color: #333 !important; }
+        .timeline::before { display: none; }
+        .timeline-item { width: 100% !important; left: 0 !important; padding: 10px 0 !important; }
+        .timeline-item::after { display: none; }
+      }
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1"
+  }
+}
+</script>
+</head>
+  <body class="transition-colors duration-500">
+    <div id="root"></div>
+  </body>
+</html>
