@@ -1,4 +1,3 @@
-
 export interface Experience {
   role: string;
   company: string;
@@ -26,6 +25,8 @@ export interface ProfileData {
   linkedin: string;
   github: string;
   about: string;
+  pageTitle: string;
+  pageDescription: string;
   experience: Experience[];
   education: Education[];
   skills: Skill[];

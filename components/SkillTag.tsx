@@ -14,11 +14,15 @@ const SkillBar: React.FC<SkillBarProps> = ({ skill, className, style }) => {
   const barRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
+    const element = barRef.current;
+    if (!element) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setBarWidth(proficiency);
-          observer.unobserve(entry.target);
+          // Once the bar is visible and animated, we can stop observing it.
+          observer.unobserve(element);
         }
       },
       {
@@ -28,14 +32,11 @@ const SkillBar: React.FC<SkillBarProps> = ({ skill, className, style }) => {
       }
     );
 
-    if (barRef.current) {
-      observer.observe(barRef.current);
-    }
+    observer.observe(element);
 
     return () => {
-      if (barRef.current) {
-        observer.unobserve(barRef.current);
-      }
+      // Cleanup: unobserve the element when the component unmounts or dependencies change.
+      observer.unobserve(element);
     };
   }, [proficiency]);
 

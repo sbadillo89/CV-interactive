@@ -8,6 +8,9 @@ export const locales: Record<"es" | "en", ProfileData> = {
     email: "ser.badillo@gmail.com",
     linkedin: "https://www.linkedin.com/in/sergio-badillo-bustillo/",
     github: "https://github.com/sergio-badillo",
+    pageTitle: "Sergio Badillo Bustillo - Desarrollador Senior .Net",
+    pageDescription:
+      "CV profesional interactivo de Sergio Badillo Bustillo, un Desarrollador Senior .Net con experiencia en C#, .Net Core, React, Azure y tecnologías web modernas.",
     about:
       "Soy un desarrollador web apasionado y dedicado con más de 10 años de experiencia en el desarrollo de aplicaciones web y de escritorio. Con capacidad de liderazgo, planificación, diseño e implementación. Me encanta el trabajo en equipo, trabajar con personas de diferentes habilidades y contribuir a la consecución de objetivos. Me considero una persona dinámica y con excelentes habilidades de comunicación.",
     experience: [
@@ -195,6 +198,9 @@ export const locales: Record<"es" | "en", ProfileData> = {
     email: "ser.badillo@gmail.com",
     linkedin: "https://www.linkedin.com/in/sergio-badillo-bustillo/",
     github: "https://github.com/sergio-badillo",
+    pageTitle: "Sergio Badillo Bustillo - Senior .Net Developer",
+    pageDescription:
+      "Interactive professional CV of Sergio Badillo Bustillo, a Senior .Net Developer with expertise in C#, .Net Core, React, Azure, and modern web technologies.",
     about:
       "I am a passionate and dedicated web developer with over 10 years of experience developing web and desktop applications. With leadership capacity, planning, design, and implementation skills. I love teamwork, working with different skilled people, and contributing to achieving goals. I consider myself a dynamic person with excellent communication skills.",
     experience: [

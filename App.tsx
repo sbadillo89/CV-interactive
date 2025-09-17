@@ -24,11 +24,42 @@ const EducationCard: React.FC<{ education: Education; className?: string; style?
   </div>
 );
 
-const ContactItem: React.FC<{ icon: 'mail' | 'linkedin' | 'github' | 'location'; text: string; href?: string }> = ({ icon, text, href }) => (
-  <a href={href} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-300 transition-colors duration-200 group text-lg">
-    <Icon name={icon} className="w-6 h-6 text-gray-500 dark:text-gray-400 group-hover:text-teal-600 dark:group-hover:text-teal-300 transition-colors duration-200" />
-    <span>{text}</span>
-  </a>
+const ContactItem: React.FC<{ icon: 'mail' | 'linkedin' | 'github' | 'location'; text: string; href?: string }> = ({ icon, text, href }) => {
+  const iconElement = <Icon name={icon} className="w-6 h-6 text-gray-500 dark:text-gray-400 group-hover:text-teal-600 dark:group-hover:text-teal-300 transition-colors duration-200" />;
+  const iconElementStatic = <Icon name={icon} className="w-6 h-6 text-gray-500 dark:text-gray-400" />;
+  
+  if (href) {
+    return (
+      <a 
+        href={href} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-300 transition-colors duration-200 group text-lg"
+      >
+        {iconElement}
+        <span>{text}</span>
+      </a>
+    );
+  }
+
+  return (
+    <div className="flex items-center space-x-3 text-gray-700 dark:text-gray-300 text-lg">
+       {iconElementStatic}
+       <span>{text}</span>
+    </div>
+  );
+};
+
+const SunIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+);
+
+const MoonIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+);
+
+const DownloadIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
 );
 
 const App: React.FC = () => {
@@ -42,7 +73,7 @@ const App: React.FC = () => {
   });
   const [activeSection, setActiveSection] = useState('home');
   const profileData = locales[language];
-  const sectionRefs = useRef<Record<string, HTMLElement>>({});
+  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
 
   useEffect(() => {
     const root = window.document.documentElement;
@@ -53,6 +84,25 @@ const App: React.FC = () => {
     }
     localStorage.setItem('theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    document.documentElement.lang = language;
+    
+    const { pageTitle, pageDescription } = profileData;
+
+    if (pageTitle) {
+      document.title = pageTitle;
+      document.querySelector('#og-title')?.setAttribute('content', pageTitle);
+      document.querySelector('#twitter-title')?.setAttribute('content', pageTitle);
+    }
+    
+    if (pageDescription) {
+      document.querySelector('#page-description')?.setAttribute('content', pageDescription);
+      document.querySelector('#og-description')?.setAttribute('content', pageDescription);
+      document.querySelector('#twitter-description')?.setAttribute('content', pageDescription);
+    }
+
+  }, [language, profileData]);
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
@@ -84,7 +134,7 @@ const App: React.FC = () => {
         }
       });
     };
-  }, []);
+  }, [language]);
   
   const sections = ['home', 'about', 'experience', 'education', 'skills', 'languages'];
 
@@ -114,27 +164,14 @@ const App: React.FC = () => {
       </button>
     </div>
   );
-
-  const SunIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-  );
-
-  const MoonIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
-  );
   
-  const DownloadIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-  );
-
-
   return (
     <div className="font-sans">
       <CustomCursor />
       <Navigation sections={sections} activeSection={activeSection} />
       
       <main>
-        <section id="home" ref={el => { if (el) sectionRefs.current.home = el; }} className="min-h-screen flex flex-col justify-center items-center text-center p-4 cv-section">
+        <section id="home" ref={el => { sectionRefs.current.home = el; }} className="min-h-screen flex flex-col justify-center items-center text-center p-4 cv-section">
           <div className="absolute top-5 right-5 flex items-center space-x-4">
             <button
                 onClick={() => window.print()}
@@ -171,8 +208,9 @@ const App: React.FC = () => {
         </section>
 
         {['about', 'experience', 'education', 'skills', 'languages'].map(sectionId => {
+           const sectionClassName = `min-h-screen flex justify-center p-4 md:p-8 cv-section ${sectionId === 'experience' ? 'py-24' : 'items-center'}`;
           return (
-            <section key={sectionId} id={sectionId} ref={el => { if (el) sectionRefs.current[sectionId] = el; }} className="min-h-screen flex justify-center items-center p-4 md:p-8 cv-section">
+            <section key={sectionId} id={sectionId} ref={el => { sectionRefs.current[sectionId] = el; }} className={sectionClassName}>
               <div className="w-full max-w-4xl bg-white/50 dark:bg-black/20 backdrop-blur-sm border border-black/10 dark:border-white/10 p-8 md:p-12 rounded-2xl shadow-2xl">
                 {sectionId === 'about' && (
                   <Section title={profileData.sections.about} className="animatable">
